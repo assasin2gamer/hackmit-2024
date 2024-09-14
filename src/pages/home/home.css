@@ -1,0 +1,157 @@
+/* Main container layout */
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 2rem;
+    background-color: #121212; /* Dark background */
+    color: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  /* Left side (text and buttons) */
+  .home-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  /* Logo with background image */
+  .logo2 {
+    width: 70px;
+    height: 70px;
+    background-image: url('../img/logo.svg');
+    top: 50px;
+    left: 50px;
+    background-repeat: no-repeat;
+    z-index: 5;
+    position: absolute;
+  }
+  
+  h1 {
+    font-size: 500%;
+    margin: 0;
+    font-weight: 700;
+    color: #E0E0E0;
+  }
+  
+  p {
+    font-size: 1.5rem;
+    margin: 1rem 0 2rem;
+    color: #B0B0B0;
+  }
+  
+  /* Buttons styling */
+  .button-container {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .start-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .contact-btn {
+    background-color: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+  }
+  
+  /* Tags styling (GPU, FPGA, Cloud, etc.) */
+  .tags {
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .tags p {
+    background-color: #222;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+  
+  /* Right side (phone mockup with background image) */
+  .home-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .phone-mockup {
+    width: 40vw;
+    height: 70vh;
+    background-image: url('../img/phone.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  /* Top-right auth buttons (Login/Sign up) */
+  .auth-buttons {
+    position: absolute;
+    top: 60px;
+    right: 5vw;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .login-btn, .signup-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .login-btn {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .signup-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  /* Bottom-right theme toggle buttons */
+  .theme-toggle {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .light-btn, .dark-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .light-btn:hover, .dark-btn:hover {
+    background-color: white;
+    color: #121212;
+  }
+  

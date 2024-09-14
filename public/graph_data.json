@@ -1,0 +1,210 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "label": "Node 0",
+      "content": "Content for Node 0"
+    },
+    {
+      "id": "1",
+      "label": "Node 1",
+      "content": "Content for Node 1"
+    },
+    {
+      "id": "2",
+      "label": "Node 2",
+      "content": "Content for Node 2"
+    },
+    {
+      "id": "3",
+      "label": "Node 3",
+      "content": "Content for Node 3"
+    },
+    {
+      "id": "4",
+      "label": "Node 4",
+      "content": "Content for Node 4"
+    },
+    {
+      "id": "5",
+      "label": "Node 5",
+      "content": "Content for Node 5"
+    },
+    {
+      "id": "6",
+      "label": "Node 6",
+      "content": "Content for Node 6"
+    },
+    {
+      "id": "7",
+      "label": "Node 7",
+      "content": "Content for Node 7"
+    },
+    {
+      "id": "8",
+      "label": "Node 8",
+      "content": "Content for Node 8"
+    },
+    {
+      "id": "9",
+      "label": "Node 9",
+      "content": "Content for Node 9"
+    }
+  ],
+  "links": [
+    {
+      "source": "0",
+      "target": "2",
+      "strength": 19,
+      "time": 16,
+      "risk": 6
+    },
+    {
+      "source": "0",
+      "target": "3",
+      "strength": 19,
+      "time": 23,
+      "risk": 3
+    },
+    {
+      "source": "0",
+      "target": "5",
+      "strength": 10,
+      "time": 2,
+      "risk": 3
+    },
+    {
+      "source": "0",
+      "target": "7",
+      "strength": 13,
+      "time": 22,
+      "risk": 7
+    },
+    {
+      "source": "0",
+      "target": "8",
+      "strength": 9,
+      "time": 24,
+      "risk": 3
+    },
+    {
+      "source": "0",
+      "target": "9",
+      "strength": 9,
+      "time": 8,
+      "risk": 1
+    },
+    {
+      "source": "1",
+      "target": "8",
+      "strength": 10,
+      "time": 21,
+      "risk": 4
+    },
+    {
+      "source": "1",
+      "target": "3",
+      "strength": 13,
+      "time": 21,
+      "risk": 3
+    },
+    {
+      "source": "1",
+      "target": "9",
+      "strength": 19,
+      "time": 24,
+      "risk": 5
+    },
+    {
+      "source": "1",
+      "target": "4",
+      "strength": 9,
+      "time": 23,
+      "risk": 3
+    },
+    {
+      "source": "2",
+      "target": "3",
+      "strength": 15,
+      "time": 26,
+      "risk": 8
+    },
+    {
+      "source": "2",
+      "target": "7",
+      "strength": 10,
+      "time": 9,
+      "risk": 6
+    },
+    {
+      "source": "2",
+      "target": "6",
+      "strength": 20,
+      "time": 13,
+      "risk": 3
+    },
+    {
+      "source": "3",
+      "target": "7",
+      "strength": 19,
+      "time": 14,
+      "risk": 1
+    },
+    {
+      "source": "3",
+      "target": "8",
+      "strength": 11,
+      "time": 24,
+      "risk": 10
+    },
+    {
+      "source": "4",
+      "target": "8",
+      "strength": 2,
+      "time": 27,
+      "risk": 10
+    },
+    {
+      "source": "4",
+      "target": "6",
+      "strength": 14,
+      "time": 18,
+      "risk": 7
+    },
+    {
+      "source": "4",
+      "target": "5",
+      "strength": 4,
+      "time": 8,
+      "risk": 10
+    },
+    {
+      "source": "4",
+      "target": "9",
+      "strength": 12,
+      "time": 19,
+      "risk": 1
+    },
+    {
+      "source": "5",
+      "target": "7",
+      "strength": 16,
+      "time": 22,
+      "risk": 9
+    },
+    {
+      "source": "5",
+      "target": "6",
+      "strength": 5,
+      "time": 16,
+      "risk": 5
+    },
+    {
+      "source": "8",
+      "target": "9",
+      "strength": 19,
+      "time": 2,
+      "risk": 3
+    }
+  ]
+}
