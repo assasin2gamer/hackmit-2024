@@ -1,27 +1,26 @@
 import React from 'react';
 import './login.css';
+import { SignIn } from '@clerk/clerk-react';
 
 function Login() {
   return (
     <div className="login-container">
-      <div className="login-form">
-        <div class="logo-container"></div>
-        <form>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" placeholder="Email" />
-
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" placeholder="Password" />
-
-          <button type="submit" className="login-button">Sign In</button>
-
-          <a href="#" className="forgot-password">Forgot password?</a>
-        </form>
-      </div>
-      <div className="login-bg">
-        {/* You can add an image as the background here */}
-      </div>
+    <div className="login-form">
+      <div className="logo-container"></div>
+      
+      {/* Clerk's SignIn component */}
+      <SignIn
+        path="/login"
+        routing="path"
+        signUpUrl="/sign-up"
+        afterSignInUrl="/dashboard" // Redirect after sign-in
+      />
     </div>
+    
+    <div className="login-bg">
+      {/* You can add an image as the background here */}
+    </div>
+  </div>
   );
 }
 

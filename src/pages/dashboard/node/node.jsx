@@ -4,22 +4,21 @@ import ForceGraph2D from 'react-force-graph-2d';
 const SimpleGraph = () => {
   const graphRef = useRef();
 
-  // Helper function to create a color gradient from green to red based on risk
-  const getRiskColor = (risk) => {
-    const red = Math.min(255, Math.floor((risk / 10) * 255)); // Risk max is assumed to be 10
-    const green = Math.min(255, Math.floor((1 - risk / 10) * 255));
+  // Helper function to create a color gradient based on strength
+  const getLinkColor = (strength = 1) => {
+    const strengthAdjusted = (strength + 1) / 2; // Convert range from [-1, 1] to [0, 1]
+    const red = Math.min(255, Math.floor(strengthAdjusted * 255));
+    const green = 255 - red;
     return `rgb(${red}, ${green}, 0)`;
   };
 
+  // Ensure slider default values are set properly
+  const [minStrength, setMinStrength] = useState(0);
+  const [searchTerm, setSearchTerm] = useState(""); // State for the search input
   const [graphData, setGraphData] = useState(null);
   const [activeTab, setActiveTab] = useState('Graph'); // Initial active tab
   const [selectedNode, setSelectedNode] = useState(null);
   const [showSliders, setShowSliders] = useState(true); // State to toggle the slider window
-
-  // Sliders for controlling thresholds
-  const [minStrength, setMinStrength] = useState(0);
-  const [minTime, setMinTime] = useState(0);
-  const [minRisk, setMinRisk] = useState(0);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}graph_data.json`)
@@ -33,28 +32,31 @@ const SimpleGraph = () => {
       .catch(error => console.error('Error loading graph data:', error));
   }, []);
 
-  // Filtered graph data based on thresholds
+  // Filtered graph data based on strength only
   const filteredGraphData = useMemo(() => {
     if (!graphData) return null;
 
-    // Filter links based on strength, time, and risk
-    const filteredLinks = graphData.links.filter(link => 
-      link.strength >= minStrength && 
-      link.time >= minTime && 
-      link.risk >= minRisk
-    );
+    // Filter links based on strength
+    const filteredLinks = graphData.links.filter(link => link.strength >= minStrength);
 
     return {
       nodes: graphData.nodes,
       links: filteredLinks
     };
-  }, [graphData, minStrength, minTime, minRisk]);
+  }, [graphData, minStrength]);
 
   const handleNodeClick = useCallback((node) => {
     setSelectedNode(node);
-    // set tabs to details when a node is clicked
     setActiveTab('Details');
   }, []);
+
+  // Search logic to highlight the node if it matches the search term
+  const getNodeColor = useCallback((node) => {
+    if (searchTerm && node.label.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return 'green'; // Highlight the searched node in green
+    }
+    return 'gray'; // Default node color
+  }, [searchTerm]);
 
   if (!filteredGraphData) {
     return <div>Loading...</div>;
@@ -62,7 +64,18 @@ const SimpleGraph = () => {
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', backgroundColor:'white' }}>
-      <h2>Interactive Graph with Sliders, Details, and Tabs</h2>
+      <h2>Interactive Graph with Search, Sliders, Details, and Tabs</h2>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '20px' }}>
+        <input
+          type="text"
+          placeholder="Search node..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: '10px', width: '300px' }}
+        />
+      </div>
 
       {/* Tab Navigation */}
       <div style={{ marginBottom: '20px' }}>
@@ -97,7 +110,7 @@ const SimpleGraph = () => {
 
       {/* Graph Tab */}
       {activeTab === 'Graph' && (
-        <div style={{ flexGrow: 1, position: 'relative' }}>
+        <div style={{ flexGrow: 0.01, position: 'relative' }}>
           {/* Sliders positioned on the top-right of the graph */}
           {showSliders && (
             <div style={{
@@ -122,48 +135,18 @@ const SimpleGraph = () => {
                 <label>Min Strength:</label>
                 <input
                   type="range"
-                  min="0"
-                  max="100"
+                  min="-1"
+                  max="1"
+                  step="0.01"
                   value={minStrength}
-                  onChange={(e) => setMinStrength(parseInt(e.target.value))}
+                  onChange={(e) => setMinStrength(parseFloat(e.target.value))}
                 />
                 <input
                   type="number"
                   value={minStrength}
-                  onChange={(e) => setMinStrength(parseInt(e.target.value))}
+                  onChange={(e) => setMinStrength(parseFloat(e.target.value))}
                   style={{ width: '50px', marginLeft: '10px' }}
-                />
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <label>Min Time:</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={minTime}
-                  onChange={(e) => setMinTime(parseInt(e.target.value))}
-                />
-                <input
-                  type="number"
-                  value={minTime}
-                  onChange={(e) => setMinTime(parseInt(e.target.value))}
-                  style={{ width: '50px', marginLeft: '10px' }}
-                />
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <label>Min Risk:</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  value={minRisk}
-                  onChange={(e) => setMinRisk(parseInt(e.target.value))}
-                />
-                <input
-                  type="number"
-                  value={minRisk}
-                  onChange={(e) => setMinRisk(parseInt(e.target.value))}
-                  style={{ width: '50px', marginLeft: '10px' }}
+                  step="0.01"
                 />
               </div>
             </div>
@@ -186,9 +169,8 @@ const SimpleGraph = () => {
             nodeLabel="label"
             linkDirectionalArrowLength={6}
             linkDirectionalArrowRelPos={1}
-            linkColor={(link) => getRiskColor(link.risk)}
-            linkWidth={(link) => link.strength / 5}
-            linkDistance={(link) => link.time * 100}
+            linkColor={(link) => getLinkColor(link.strength)}
+            linkWidth={(link) => Math.max(link.strength / 5, 1)} // Ensure a minimum width
             width={800}
             height={600}
             onNodeClick={handleNodeClick}
@@ -197,7 +179,8 @@ const SimpleGraph = () => {
             d3VelocityDecay={0.2} // Slow down the velocity decay
             d3ForceCenter={true} // Add force towards the center
             nodeCanvasObject={(node, ctx) => {
-              ctx.fillStyle = 'gray';
+              const color = getNodeColor(node);
+              ctx.fillStyle = color;
               const radius = 10;
               ctx.beginPath();
               ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);

@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react'; // Import useCallback
-import Graph from './graph/graph'; // Import the Graph component
-import './dashboard.css'; // Import the styles
-import SimpleGraph from './node/node'; // Import the SimpleGraph component
+import React, { useState, useEffect, useCallback } from 'react'; 
+import Graph from './graph/graph'; 
+import './dashboard.css'; 
+import SimpleGraph from './node/node'; 
 import { ConvexReactClient } from 'convex/react';
-import { useMutation } from 'convex/react'; // Correctly import the mutation hook
+import { useMutation } from 'convex/react'; 
 import { Tooltip } from 'chart.js';
-import { Menu } from './menu/menu'
+import { Menu } from './menu/menu';
+import { UserButton } from '@clerk/clerk-react'; // Import Clerk's UserButton
 
 // ResizableComponent is a wrapper to handle resizing logic
 function ResizableComponent({ children, initialWidth, initialHeight, minWidth = 200, minHeight = 200, maxWidth = 1000, maxHeight = 1000 }) {
@@ -112,12 +113,16 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
 
+      {/* Top-right UserButton for profile and sign out */}
+      <div className="top-right">
+        <UserButton afterSignOutUrl="/login" /> {/* Automatically handles sign-out */}
+      </div>
 
       {/* Left Sidebar */}
       <div className="left-sidebar">
-      <div>
-        <button onClick={handleAddData}>Insert Document</button>
-      </div>
+        <div>
+          <button onClick={handleAddData}>Insert Document</button>
+        </div>
         <div className="icon green"></div>
         <div className="icon gray"></div>
         <div className="icon gray"></div>
@@ -126,35 +131,31 @@ function Dashboard() {
       </div>
 
       {/* Main Content with Resizing */}
-      
-
-      {/* Node Graph with Resizing */}
       <div className="node-graph">
         <ResizableComponent initialWidth={'100vw'} initialHeight={'100vh'}>
           <SimpleGraph />
           <div className="main-content">
-        <div className="graph-header">
-          <h2>Portfolio Analytics</h2>
-          <div className="timeframe">
-            <span>1D</span>
-            <span>5D</span>
-            <span>1M</span>
-            <span>1Y</span>
-            <span>5Y</span>
-            <span>Max</span>
+            <div className="graph-header">
+              <h2>Portfolio Analytics</h2>
+              <div className="timeframe">
+                <span>1D</span>
+                <span>5D</span>
+                <span>1M</span>
+                <span>1Y</span>
+                <span>5Y</span>
+                <span>Max</span>
+              </div>
+            </div>
+            <ResizableComponent initialWidth={600} initialHeight={400}>
+              <Graph />
+            </ResizableComponent>
           </div>
-        </div>
-        <ResizableComponent initialWidth={600} initialHeight={400}>
-          <Graph />
-        </ResizableComponent>
-      </div>
         </ResizableComponent>
       </div>
 
       <div>
         <Menu />
       </div>
-
 
     </div>
   );
